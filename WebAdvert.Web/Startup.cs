@@ -18,7 +18,7 @@ namespace WebAdvert.Web
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddCognitoIdentity(); //injecting all dependencies in order to use cognito as identiy provider
+            //services.AddCognitoIdentity(); //injecting all dependencies in order to use cognito as identiy provider
             services.AddCognitoIdentity(config =>
             {
                 config.Password = new Microsoft.AspNetCore.Identity.PasswordOptions
@@ -32,6 +32,13 @@ namespace WebAdvert.Web
 
                 };
             });
+
+            //REdiirects if not logged in
+            services.ConfigureApplicationCookie(options =>
+            {
+                options.LoginPath = "/Accounts/Login";
+            });
+
             services.AddControllersWithViews();
         }
 
